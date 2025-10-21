@@ -51,6 +51,44 @@ body {
     transition: opacity 0.5s ease, transform 0.5s ease;
     transform: translateY(30px);
     overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Tablet adjustments */
+@media (min-width: 768px) {
+    .page {
+        padding: 30px;
+    }
+}
+
+/* Desktop adjustments */
+@media (min-width: 1024px) {
+    .page {
+        position: relative;
+        width: auto;
+        height: auto;
+        min-height: 100vh;
+        max-width: 900px;
+        margin: 20px auto;
+        left: auto;
+        transform: none;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+        border-radius: 24px;
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 182, 193, 0.2);
+    }
+
+    .page.active {
+        opacity: 1;
+        visibility: visible;
+        transform: none;
+    }
+
+    .page:not(.active) {
+        display: none;
+    }
 }
 
 .page.active {
@@ -64,6 +102,16 @@ body {
     max-width: 600px;
     margin: 0 auto;
     padding: 0 20px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* Desktop container adjustments */
+@media (min-width: 1024px) {
+    .container {
+        max-width: 700px;
+        padding: 0 30px;
+    }
 }
 
 /* ========== Splash Screen ========== */
@@ -151,6 +199,19 @@ body {
 #user-selection {
     background: linear-gradient(135deg, var(--bg-pink) 0%, #FFE4E9 100%);
     padding: 60px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+}
+
+/* Desktop user selection adjustments */
+@media (min-width: 1024px) {
+    #user-selection {
+        padding: 80px 40px;
+        min-height: auto;
+        background: transparent;
+    }
 }
 
 .user-select-title {
@@ -225,9 +286,17 @@ body {
 }
 
 .user-avatar {
-    font-size: 80px;
     margin-bottom: 10px;
     animation: gentleFloat 3s ease-in-out infinite;
+}
+
+.user-avatar-img {
+    width: 160px;
+    height: 160px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid var(--accent-pink);
+    box-shadow: 0 4px 12px var(--shadow-pink);
 }
 
 .user-name {
@@ -253,6 +322,33 @@ body {
     background-clip: text;
     margin-bottom: 40px;
     margin-top: 40px;
+}
+
+/* Desktop main menu adjustments */
+@media (min-width: 1024px) {
+    .app-title {
+        font-size: 48px;
+        margin-bottom: 60px;
+        margin-top: 60px;
+    }
+}
+
+/* Main menu page specific adjustments */
+#main-menu {
+    background: linear-gradient(135deg, var(--bg-pink) 0%, #FFE4E9 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+}
+
+/* Desktop main menu page adjustments */
+@media (min-width: 1024px) {
+    #main-menu {
+        background: transparent;
+        min-height: auto;
+        padding: 40px 20px;
+    }
 }
 
 .menu-grid {
@@ -340,6 +436,41 @@ body {
 /* ========== Workout Pages ========== */
 .workout-page {
     padding-top: 60px;
+    position: relative;
+    justify-content: flex-start;
+}
+
+/* Desktop adjustments for workout pages */
+@media (min-width: 1024px) {
+    .workout-page {
+        padding-top: 80px;
+        min-height: auto;
+    }
+}
+
+.background-image-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+    pointer-events: none;
+    opacity: 0.8;
+}
+
+.background-image {
+    width: 400px;
+    height: auto;
+    max-width: 90vw;
+    object-fit: contain;
+}
+
+/* Desktop background image adjustments */
+@media (min-width: 1024px) {
+    .background-image {
+        width: 500px;
+        max-width: 60vw;
+    }
 }
 
 .back-button {
@@ -742,6 +873,71 @@ body {
 
     .container {
         max-width: 800px;
+    }
+
+    /* Enhanced desktop experience */
+    .user-avatar-img {
+        width: 200px;
+        height: 200px;
+    }
+
+    .user-name {
+        font-size: 36px;
+    }
+
+    .user-tagline {
+        font-size: 20px;
+    }
+
+    .menu-button {
+        min-height: 200px;
+        padding: 40px 25px;
+    }
+
+    .menu-emoji {
+        font-size: 60px;
+    }
+
+    .menu-text {
+        font-size: 18px;
+    }
+
+    .exercise-card {
+        padding: 30px;
+    }
+
+    .exercise-name {
+        font-size: 22px;
+    }
+
+    .btn {
+        padding: 14px 28px;
+        font-size: 16px;
+    }
+
+    /* Better scrolling on desktop */
+    .page {
+        overflow-y: auto;
+        max-height: calc(100vh - 40px);
+        scrollbar-width: thin;
+        scrollbar-color: var(--accent-pink) transparent;
+    }
+
+    .page::-webkit-scrollbar {
+        width: 8px;
+    }
+
+    .page::-webkit-scrollbar-track {
+        background: transparent;
+    }
+
+    .page::-webkit-scrollbar-thumb {
+        background: var(--accent-pink);
+        border-radius: 4px;
+    }
+
+    .page::-webkit-scrollbar-thumb:hover {
+        background: var(--dark-pink);
     }
 }
 
