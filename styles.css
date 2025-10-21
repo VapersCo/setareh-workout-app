@@ -781,22 +781,20 @@ body {
 }
 
 .btn-celebration {
-    background: linear-gradient(135deg, var(--accent-pink) 0%, var(--dark-pink) 100%);
+    background: transparent;
     color: var(--white);
     border: none;
     border-radius: 25px;
-    padding: 20px 30px;
+    padding: 10px;
     font-size: 18px;
     font-weight: 700;
     cursor: pointer;
     display: flex;
     align-items: center;
-    gap: 15px;
-    box-shadow: 0 8px 20px var(--shadow-dark);
+    justify-content: center;
+    box-shadow: none;
     transition: all var(--transition);
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    min-height: 80px;
+    min-height: auto;
 }
 
 .btn-celebration:hover {
@@ -805,12 +803,18 @@ body {
 }
 
 .celebration-image {
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
+    width: 200px;
+    height: 200px;
+    border-radius: 20px;
     object-fit: cover;
-    border: 3px solid var(--white);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    border: 4px solid var(--accent-pink);
+    box-shadow: 0 8px 25px var(--shadow-pink);
+    transition: all var(--transition);
+}
+
+.celebration-image:hover {
+    transform: scale(1.05);
+    box-shadow: 0 12px 35px var(--shadow-dark);
 }
 
 @keyframes celebrationPulse {
