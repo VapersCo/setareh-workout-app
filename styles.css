@@ -657,6 +657,29 @@ body {
     font-style: italic;
 }
 
+.completion-emoji {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 24px;
+    animation: bounceIn 0.6s ease-out;
+}
+
+@keyframes bounceIn {
+    0% {
+        transform: scale(0) rotate(0deg);
+        opacity: 0;
+    }
+    50% {
+        transform: scale(1.2) rotate(180deg);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(1) rotate(360deg);
+        opacity: 1;
+    }
+}
+
 .exercise-details {
     display: flex;
     flex-direction: column;

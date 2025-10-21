@@ -81,8 +81,24 @@ function toggleExerciseCompletion(exerciseId) {
     if (exerciseCard) {
         if (progress[exerciseId].completed) {
             exerciseCard.classList.add('completed');
+            // Add kitty emoji to completed exercises
+            let emojiDiv = exerciseCard.querySelector('.completion-emoji');
+            if (!emojiDiv) {
+                emojiDiv = document.createElement('div');
+                emojiDiv.className = 'completion-emoji';
+                emojiDiv.textContent = '🐱';
+                const header = exerciseCard.querySelector('.exercise-header');
+                if (header) {
+                    header.appendChild(emojiDiv);
+                }
+            }
         } else {
             exerciseCard.classList.remove('completed');
+            // Remove kitty emoji from incomplete exercises
+            const emojiDiv = exerciseCard.querySelector('.completion-emoji');
+            if (emojiDiv) {
+                emojiDiv.remove();
+            }
         }
     }
 
@@ -233,6 +249,7 @@ function renderExercises(dayId) {
             <div class="exercise-header">
                 <div class="exercise-name">${exercise.name}</div>
                 <div class="exercise-name-persian">(${exercise.namePersian})</div>
+                ${isCompleted ? '<div class="completion-emoji">🐱</div>' : ''}
             </div>
 
             <div class="exercise-details">
