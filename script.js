@@ -158,7 +158,7 @@ function checkAndShowCelebrationButton(dayId, completedCount, totalExercises) {
         celebrationButton.className = 'celebration-button';
         celebrationButton.innerHTML = `
             <button class="btn btn-celebration" onclick="playCelebrationVideo()">
-                <img src="images/cat button.png" alt="Celebration Cat" class="celebration-image" onerror="console.error('Failed to load cat button image')">
+                <img src="images/cat button2.png" alt="Celebration Cat" class="celebration-image" onerror="console.error('Failed to load cat button2 image')">
             </button>
         `;
 
