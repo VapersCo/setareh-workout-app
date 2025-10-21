@@ -118,6 +118,96 @@ function updateProgress(dayId) {
     if (progressElement) {
         progressElement.textContent = `${completedCount} of ${totalExercises} exercises complete`;
     }
+
+    // Check if all exercises are completed and show celebration video button
+    checkAndShowCelebrationButton(dayId, completedCount, totalExercises);
+}
+
+/**
+ * Check if all exercises are completed and show celebration button
+ */
+function checkAndShowCelebrationButton(dayId, completedCount, totalExercises) {
+    const workoutContainer = document.getElementById(dayId);
+    if (!workoutContainer) return;
+
+    // Remove existing celebration button if it exists
+    const existingButton = workoutContainer.querySelector('.celebration-button');
+    if (existingButton) {
+        existingButton.remove();
+    }
+
+    // Add celebration button if all exercises are completed
+    if (completedCount === totalExercises && totalExercises > 0) {
+        const celebrationButton = document.createElement('div');
+        celebrationButton.className = 'celebration-button';
+        celebrationButton.innerHTML = `
+            <button class="btn btn-celebration" onclick="playCelebrationVideo()">
+                <img src="images/5.png" alt="Celebration" class="celebration-image">
+                <span>🎉 Workout Complete! 🎉</span>
+            </button>
+        `;
+
+        // Insert after the cooldown section
+        const cooldownSection = workoutContainer.querySelector('.cooldown');
+        if (cooldownSection) {
+            cooldownSection.insertAdjacentElement('afterend', celebrationButton);
+        } else {
+            // Fallback: add to end of container
+            workoutContainer.appendChild(celebrationButton);
+        }
+    }
+}
+
+/**
+ * Play the celebration video
+ */
+function playCelebrationVideo() {
+    // Haptic feedback
+    if (navigator.vibrate) {
+        navigator.vibrate([100, 50, 100, 50, 200]);
+    }
+
+    // Create video modal for celebration
+    const videoModal = document.createElement('div');
+    videoModal.className = 'modal active';
+    videoModal.innerHTML = `
+        <div class="modal-overlay" onclick="closeCelebrationVideo()"></div>
+        <div class="modal-content celebration-modal">
+            <button class="modal-close" onclick="closeCelebrationVideo()">&times;</button>
+            <div class="video-container">
+                <video id="celebration-video" controls autoplay>
+                    <source src="images/cat ending.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+            <div class="celebration-text">
+                <h3>🎉 Amazing Work, Setareh! 🎉</h3>
+                <p>You've completed your entire workout! 💪✨</p>
+            </div>
+        </div>
+    `;
+
+    document.body.appendChild(videoModal);
+
+    // Auto-remove modal after video ends
+    const video = document.getElementById('celebration-video');
+    if (video) {
+        video.addEventListener('ended', () => {
+            setTimeout(() => {
+                closeCelebrationVideo();
+            }, 2000); // Keep modal open for 2 seconds after video ends
+        });
+    }
+}
+
+/**
+ * Close the celebration video modal
+ */
+function closeCelebrationVideo() {
+    const modal = document.querySelector('.celebration-modal');
+    if (modal) {
+        modal.parentElement.remove();
+    }
 }
 
 /**
@@ -419,3 +509,5 @@ document.addEventListener('DOMContentLoaded', () => {
 window.openVideoModal = openVideoModal;
 window.closeVideoModal = closeVideoModal;
 window.toggleExerciseCompletion = toggleExerciseCompletion;
+window.playCelebrationVideo = playCelebrationVideo;
+window.closeCelebrationVideo = closeCelebrationVideo;
