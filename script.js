@@ -154,11 +154,13 @@ function checkAndShowCelebrationButton(dayId, completedCount, totalExercises) {
 
     // Add celebration button if all exercises are completed
     if (completedCount === totalExercises && totalExercises > 0) {
+        console.log(`All exercises completed! ${completedCount}/${totalExercises} - Adding celebration button`);
+
         const celebrationButton = document.createElement('div');
         celebrationButton.className = 'celebration-button';
         celebrationButton.innerHTML = `
             <button class="btn btn-celebration" onclick="playCelebrationVideo()">
-                <img src="images/cat button2.png" alt="Celebration Cat" class="celebration-image" onerror="console.error('Failed to load cat button2 image')">
+                <img src="images/cat button2.png" alt="Celebration Cat" class="celebration-image" onload="console.log('Cat button image loaded successfully')" onerror="console.error('Failed to load cat button2 image')">
             </button>
         `;
 
@@ -168,10 +170,13 @@ function checkAndShowCelebrationButton(dayId, completedCount, totalExercises) {
             cooldownSection.insertAdjacentElement('afterend', celebrationButton);
             console.log('Celebration button added after cooldown section');
         } else {
+            console.log('No cooldown section found, looking for other insertion points');
             // Fallback: add to end of container
             workoutContainer.appendChild(celebrationButton);
             console.log('Celebration button added to end of container (fallback)');
         }
+    } else {
+        console.log(`Exercises not complete: ${completedCount}/${totalExercises}`);
     }
 }
 
