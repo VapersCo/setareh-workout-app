@@ -152,43 +152,34 @@ function checkAndShowCelebrationButton(dayId, completedCount, totalExercises) {
         existingButton.remove();
     }
 
-    // Add celebration button if any exercise is completed
-    if (completedCount > 0 && totalExercises > 0) {
-        console.log(`At least one exercise completed! ${completedCount}/${totalExercises} - Adding celebration button`);
+    // Always show celebration button after cooldown (simplified approach)
+    console.log(`Updating celebration button for ${dayId}: ${completedCount}/${totalExercises}`);
 
-        // Remove existing celebration button if it exists
-        const existingButton = workoutContainer.querySelector('.celebration-button');
-        if (existingButton) {
-            existingButton.remove();
-        }
+    // Remove existing celebration button if it exists
+    let existingBtn = workoutContainer.querySelector('.celebration-button');
+    if (existingBtn) {
+        existingBtn.remove();
+    }
 
-        const celebrationButton = document.createElement('div');
-        celebrationButton.className = 'celebration-button';
-        celebrationButton.innerHTML = `
-            <button class="btn btn-celebration" onclick="playCelebrationVideo()">
-                <img src="images/cat button2.png" alt="Celebration Cat" class="celebration-image" onload="console.log('Cat button image loaded successfully')" onerror="console.error('Failed to load cat button2 image')">
-            </button>
-        `;
+    // Always add the celebration button after cooldown
+    const celebrationButton = document.createElement('div');
+    celebrationButton.className = 'celebration-button';
+    celebrationButton.innerHTML = `
+        <div style="text-align: center; padding: 20px;">
+            <img src="images/cat button2.png" alt="Celebration Cat" style="width: 200px; height: 200px; border-radius: 20px; border: 4px solid #FF69B4; box-shadow: 0 8px 25px rgba(255, 105, 180, 0.3); cursor: pointer; transition: all 0.3s ease;" onclick="playCelebrationVideo()" onload="console.log('Cat button image loaded successfully')" onerror="console.error('Failed to load cat button2 image'); this.style.display='none';">
+        </div>
+    `;
 
-        // Insert after the cooldown section
-        const cooldownSection = workoutContainer.querySelector('.cooldown');
-        if (cooldownSection) {
-            cooldownSection.insertAdjacentElement('afterend', celebrationButton);
-            console.log('Celebration button added after cooldown section');
-        } else {
-            console.log('No cooldown section found, looking for other insertion points');
-            // Fallback: add to end of container
-            workoutContainer.appendChild(celebrationButton);
-            console.log('Celebration button added to end of container (fallback)');
-        }
+    // Insert after the cooldown section
+    const cooldownSection = workoutContainer.querySelector('.cooldown');
+    if (cooldownSection) {
+        cooldownSection.insertAdjacentElement('afterend', celebrationButton);
+        console.log('Celebration button added after cooldown section');
     } else {
-        // Remove celebration button if no exercises are completed
-        const existingButton = workoutContainer.querySelector('.celebration-button');
-        if (existingButton) {
-            existingButton.remove();
-            console.log('Celebration button removed - no exercises completed');
-        }
-        console.log(`No exercises completed: ${completedCount}/${totalExercises}`);
+        console.log('No cooldown section found, adding to end of container');
+        // Fallback: add to end of container
+        workoutContainer.appendChild(celebrationButton);
+        console.log('Celebration button added to end of container (fallback)');
     }
 }
 
