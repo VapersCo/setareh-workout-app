@@ -135,7 +135,7 @@ function updateProgress(dayId) {
         progressElement.textContent = `${completedCount} of ${totalExercises} exercises complete`;
     }
 
-    // Check if all exercises are completed and show celebration video button
+    // Check if any exercise is completed and show celebration button
     checkAndShowCelebrationButton(dayId, completedCount, totalExercises);
 }
 
@@ -152,9 +152,15 @@ function checkAndShowCelebrationButton(dayId, completedCount, totalExercises) {
         existingButton.remove();
     }
 
-    // Add celebration button if all exercises are completed
-    if (completedCount === totalExercises && totalExercises > 0) {
-        console.log(`All exercises completed! ${completedCount}/${totalExercises} - Adding celebration button`);
+    // Add celebration button if any exercise is completed
+    if (completedCount > 0 && totalExercises > 0) {
+        console.log(`At least one exercise completed! ${completedCount}/${totalExercises} - Adding celebration button`);
+
+        // Remove existing celebration button if it exists
+        const existingButton = workoutContainer.querySelector('.celebration-button');
+        if (existingButton) {
+            existingButton.remove();
+        }
 
         const celebrationButton = document.createElement('div');
         celebrationButton.className = 'celebration-button';
@@ -176,7 +182,13 @@ function checkAndShowCelebrationButton(dayId, completedCount, totalExercises) {
             console.log('Celebration button added to end of container (fallback)');
         }
     } else {
-        console.log(`Exercises not complete: ${completedCount}/${totalExercises}`);
+        // Remove celebration button if no exercises are completed
+        const existingButton = workoutContainer.querySelector('.celebration-button');
+        if (existingButton) {
+            existingButton.remove();
+            console.log('Celebration button removed - no exercises completed');
+        }
+        console.log(`No exercises completed: ${completedCount}/${totalExercises}`);
     }
 }
 
