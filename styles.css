@@ -745,6 +745,28 @@ body {
     box-shadow: 0 4px 12px var(--shadow-dark);
 }
 
+.btn-video-warmup {
+    background: linear-gradient(135deg, var(--accent-pink) 0%, var(--dark-pink) 100%);
+    color: var(--white);
+    border: none;
+    width: 32px;
+    height: 32px;
+    border-radius: 16px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all var(--transition);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 8px;
+    box-shadow: 0 2px 8px var(--shadow-dark);
+}
+
+.btn-video-warmup:hover {
+    transform: scale(1.1);
+    box-shadow: 0 4px 12px var(--shadow-dark);
+}
+
 .checkbox-container {
     display: flex;
     align-items: center;
