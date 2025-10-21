@@ -8,8 +8,14 @@ let holdCompleted = false;
 let swipeStartY = null;
 let currentPage = 'splash-screen';
 
-// LocalStorage key
+// LocalStorage keys
 const STORAGE_KEY = 'setareh_workout_progress';
+const TIMER_KEY = 'setareh_workout_timer';
+
+// Timer state
+let workoutStartTime = null;
+let workoutTimerInterval = null;
+let currentWorkoutDay = null;
 
 // ========== Utility Functions ==========
 
@@ -17,6 +23,11 @@ const STORAGE_KEY = 'setareh_workout_progress';
  * Navigate to a different page
  */
 function navigateTo(pageId) {
+    // Stop timer when leaving workout pages
+    if (currentPage && currentPage.startsWith('day') && !pageId.startsWith('day')) {
+        stopWorkoutTimer();
+    }
+
     // Hide all pages
     document.querySelectorAll('.page').forEach(page => {
         page.classList.remove('active');
@@ -30,8 +41,10 @@ function navigateTo(pageId) {
 
         // If navigating to a workout day, render exercises and update progress
         if (pageId.startsWith('day')) {
+            currentWorkoutDay = pageId;
             renderExercises(pageId);
             updateProgress(pageId);
+            updateTimerDisplay();
         }
     }
 }
@@ -161,12 +174,16 @@ function checkAndShowCelebrationButton(dayId, completedCount, totalExercises) {
         existingBtn.remove();
     }
 
+    // Stop the timer and calculate duration
+    const workoutDuration = getElapsedTime();
+    const formattedDuration = formatDuration(workoutDuration);
+
     // Always add the celebration button after cooldown
     const celebrationButton = document.createElement('div');
     celebrationButton.className = 'celebration-button';
     celebrationButton.innerHTML = `
         <div style="text-align: center; padding: 20px;">
-            <img src="images/cat button2.png" alt="Celebration Cat" style="width: 200px; height: 200px; border-radius: 20px; border: 4px solid #FF69B4; box-shadow: 0 8px 25px rgba(255, 105, 180, 0.3); cursor: pointer; transition: all 0.3s ease;" onclick="playCelebrationVideo()" onload="console.log('Cat button image loaded successfully')" onerror="console.error('Failed to load cat button2 image'); this.style.display='none';">
+            <img src="images/cat button2.png" alt="Celebration Cat" style="width: 200px; height: 200px; border-radius: 20px; border: 4px solid #FF69B4; box-shadow: 0 8px 25px rgba(255, 105, 180, 0.3); cursor: pointer; transition: all 0.3s ease;" onclick="showCelebrationPage('${formattedDuration}')" onload="console.log('Cat button image loaded successfully')" onerror="console.error('Failed to load cat button2 image'); this.style.display='none';">
         </div>
     `;
 
@@ -508,6 +525,133 @@ function closeVideoModal() {
     // Not needed anymore, but keeping for compatibility
 }
 
+// ========== Timer Functions ==========
+
+/**
+ * Start workout timer
+ */
+function startWorkoutTimer() {
+    if (workoutStartTime === null) {
+        workoutStartTime = Date.now();
+        localStorage.setItem(TIMER_KEY, workoutStartTime.toString());
+        updateTimerDisplay();
+
+        // Start updating the display every second
+        workoutTimerInterval = setInterval(updateTimerDisplay, 1000);
+
+        // Haptic feedback
+        if (navigator.vibrate) {
+            navigator.vibrate(50);
+        }
+
+        console.log('Workout timer started');
+    }
+}
+
+/**
+ * Stop workout timer
+ */
+function stopWorkoutTimer() {
+    if (workoutTimerInterval) {
+        clearInterval(workoutTimerInterval);
+        workoutTimerInterval = null;
+        console.log('Workout timer stopped');
+    }
+}
+
+/**
+ * Get elapsed workout time in milliseconds
+ */
+function getElapsedTime() {
+    if (workoutStartTime === null) return 0;
+    return Date.now() - workoutStartTime;
+}
+
+/**
+ * Format time as HH:MM:SS or MM:SS
+ */
+function formatTime(milliseconds) {
+    const totalSeconds = Math.floor(milliseconds / 1000);
+    const hours = Math.floor(totalSeconds / 3600);
+    const minutes = Math.floor((totalSeconds % 3600) / 60);
+    const seconds = totalSeconds % 60;
+
+    if (hours > 0) {
+        return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+    } else {
+        return `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+    }
+}
+
+/**
+ * Format duration as Xh Ym or Xm Ys
+ */
+function formatDuration(milliseconds) {
+    const totalSeconds = Math.floor(milliseconds / 1000);
+    const hours = Math.floor(totalSeconds / 3600);
+    const minutes = Math.floor((totalSeconds % 3600) / 60);
+    const seconds = totalSeconds % 60;
+
+    if (hours > 0) {
+        return `${hours}h ${minutes}m`;
+    } else if (minutes > 0) {
+        return `${minutes}m ${seconds}s`;
+    } else {
+        return `${seconds}s`;
+    }
+}
+
+/**
+ * Update timer display on current workout page
+ */
+function updateTimerDisplay() {
+    if (!currentWorkoutDay || !currentWorkoutDay.startsWith('day')) return;
+
+    const workoutContainer = document.getElementById(currentWorkoutDay);
+    if (!workoutContainer) return;
+
+    let timerDisplay = workoutContainer.querySelector('.workout-timer-display');
+    if (!timerDisplay) {
+        // Create timer display if it doesn't exist
+        const progressIndicator = workoutContainer.querySelector('.progress-indicator');
+        if (progressIndicator) {
+            timerDisplay = document.createElement('div');
+            timerDisplay.className = 'workout-timer-display';
+            progressIndicator.insertAdjacentElement('afterend', timerDisplay);
+        }
+    }
+
+    if (timerDisplay && workoutStartTime !== null) {
+        const elapsed = getElapsedTime();
+        timerDisplay.innerHTML = `
+            <div class="timer-content">
+                <span class="timer-icon">⏱️</span>
+                <span class="timer-text">${formatTime(elapsed)}</span>
+            </div>
+        `;
+    }
+}
+
+/**
+ * Initialize timer on page load
+ */
+function initializeTimer() {
+    const savedStartTime = localStorage.getItem(TIMER_KEY);
+    if (savedStartTime) {
+        workoutStartTime = parseInt(savedStartTime);
+        // Check if timer is from today (within 24 hours)
+        const elapsed = getElapsedTime();
+        if (elapsed < 24 * 60 * 60 * 1000) { // 24 hours
+            workoutTimerInterval = setInterval(updateTimerDisplay, 1000);
+            console.log('Restored workout timer from localStorage');
+        } else {
+            // Clear old timer
+            localStorage.removeItem(TIMER_KEY);
+            workoutStartTime = null;
+        }
+    }
+}
+
 function initVideoModal() {
     // Not needed anymore, but keeping for compatibility
 }
@@ -522,6 +666,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initUserSelection();
     initNavigation();
     initVideoModal();
+    initializeTimer();
 
     // Pre-render exercises for all days
     ['day1', 'day2', 'day3'].forEach(dayId => {
@@ -529,6 +674,73 @@ document.addEventListener('DOMContentLoaded', () => {
         updateProgress(dayId);
     });
 });
+
+// ========== Celebration Page ==========
+
+/**
+ * Show celebration page with video and duration
+ */
+function showCelebrationPage(duration) {
+    // Stop the timer
+    stopWorkoutTimer();
+
+    // Clear timer data
+    localStorage.removeItem(TIMER_KEY);
+    workoutStartTime = null;
+
+    // Create celebration page
+    const celebrationPage = document.createElement('div');
+    celebrationPage.id = 'celebration-page';
+    celebrationPage.className = 'page active';
+    celebrationPage.innerHTML = `
+        <div class="container">
+            <div class="celebration-content">
+                <h1 class="celebration-title">🎉 Amazing Workout! 🎉</h1>
+
+                <div class="celebration-video-container">
+                    <video id="celebration-video" controls autoplay>
+                        <source src="images/cat ending.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+
+                <div class="celebration-stats">
+                    <div class="stat-item">
+                        <span class="stat-label">Workout Duration:</span>
+                        <span class="stat-value">${duration}</span>
+                    </div>
+                </div>
+
+                <button class="btn btn-celebration-finish" onclick="returnToMenu()">
+                    <span>🏠 Back to Menu</span>
+                </button>
+            </div>
+        </div>
+    `;
+
+    // Add to body
+    document.body.appendChild(celebrationPage);
+
+    // Hide other pages
+    document.querySelectorAll('.page').forEach(page => {
+        if (page.id !== 'celebration-page') {
+            page.classList.remove('active');
+        }
+    });
+
+    console.log(`Celebration page shown with duration: ${duration}`);
+}
+
+/**
+ * Return to main menu from celebration page
+ */
+function returnToMenu() {
+    const celebrationPage = document.getElementById('celebration-page');
+    if (celebrationPage) {
+        celebrationPage.remove();
+    }
+    navigateTo('main-menu');
+}
 
 // ========== Global Functions (for inline event handlers) ==========
 // These are defined globally so they can be called from HTML onclick attributes
