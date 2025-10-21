@@ -36,7 +36,9 @@ struct WorkoutDay: Identifiable, Codable {
 struct WarmupExercise: Codable {
     let name: String
     let namePersian: String
-    let duration: String // e.g., "2 minutes", "10 reps"
+    let duration: String? // e.g., "2 minutes"
+    let reps: String? // e.g., "10 each direction"
+    let videoId: String? // YouTube Shorts video ID
 }
 
 // MARK: - Cooldown Exercise Model

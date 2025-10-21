@@ -151,12 +151,26 @@ struct WarmupRow: View {
                     .foregroundColor(.textLight)
                     .italic()
 
-                Text(warmup.duration)
+                Text(warmup.duration ?? warmup.reps ?? "")
                     .font(.caption)
                     .foregroundColor(.accentPink)
             }
 
             Spacer()
+
+            // Video button for warmup exercises
+            if let videoId = warmup.videoId {
+                Button(action: {
+                    // Open YouTube Shorts in new tab (works better on mobile)
+                    if let url = URL(string: "https://www.youtube.com/shorts/\(videoId)") {
+                        UIApplication.shared.open(url)
+                    }
+                }) {
+                    Image(systemName: "play.circle.fill")
+                        .font(.title3)
+                        .foregroundColor(.accentPink)
+                }
+            }
         }
     }
 }

@@ -11,17 +11,20 @@ const workoutData = {
             {
                 name: "Marching in place",
                 namePersian: "مارش در محل",
-                duration: "2 minutes"
+                duration: "2 minutes",
+                videoId: "5l-A5_-BPUg"
             },
             {
                 name: "Hip circles",
                 namePersian: "دایره ران",
-                reps: "10 each direction"
+                reps: "10 each direction",
+                videoId: "OqR7Tl6SPLQ"
             },
             {
                 name: "Leg swings",
                 namePersian: "نوسان پا",
-                reps: "10 each leg"
+                reps: "10 each leg",
+                videoId: "DTXpjDJDoeI"
             }
         ],
         exercises: [
@@ -89,17 +92,20 @@ const workoutData = {
             {
                 name: "Arm circles",
                 namePersian: "دایره بازو",
-                reps: "10 each direction"
+                reps: "10 each direction",
+                videoId: "cgKSxonUrZI"
             },
             {
                 name: "Shoulder rolls",
                 namePersian: "چرخش شانه",
-                reps: "10 forward, 10 back"
+                reps: "10 forward, 10 back",
+                videoId: "A7kgx8gGmPA"
             },
             {
                 name: "Cat-cow stretch",
                 namePersian: "کشش گربه-گاو",
-                reps: "10 reps"
+                reps: "10 reps",
+                videoId: "oMDrs7dPtxI"
             }
         ],
         exercises: [
@@ -167,17 +173,20 @@ const workoutData = {
             {
                 name: "Jumping jacks",
                 namePersian: "جامپینگ جک",
-                duration: "30 seconds"
+                duration: "30 seconds",
+                videoId: "g03AajXXbHE"
             },
             {
                 name: "Bodyweight squats",
                 namePersian: "اسکوات",
-                reps: "10 reps"
+                reps: "10 reps",
+                videoId: "iZTxa8NJH2g"
             },
             {
                 name: "Arm swings",
                 namePersian: "نوسان بازو",
-                reps: "10 each direction"
+                reps: "10 each direction",
+                videoId: "Wl2F3qhTpP0"
             }
         ],
         exercises: [
