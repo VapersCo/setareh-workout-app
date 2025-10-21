@@ -158,7 +158,7 @@ function checkAndShowCelebrationButton(dayId, completedCount, totalExercises) {
         celebrationButton.className = 'celebration-button';
         celebrationButton.innerHTML = `
             <button class="btn btn-celebration" onclick="playCelebrationVideo()">
-                <img src="images/cat button.png" alt="Celebration Cat" class="celebration-image">
+                <img src="images/cat button.png" alt="Celebration Cat" class="celebration-image" onerror="console.error('Failed to load cat button image')">
             </button>
         `;
 
@@ -166,9 +166,11 @@ function checkAndShowCelebrationButton(dayId, completedCount, totalExercises) {
         const cooldownSection = workoutContainer.querySelector('.cooldown');
         if (cooldownSection) {
             cooldownSection.insertAdjacentElement('afterend', celebrationButton);
+            console.log('Celebration button added after cooldown section');
         } else {
             // Fallback: add to end of container
             workoutContainer.appendChild(celebrationButton);
+            console.log('Celebration button added to end of container (fallback)');
         }
     }
 }
