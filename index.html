@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Setareh's personalized 3-day workout program">
+    <title>Setareh's Workout App</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <!-- Splash Screen -->
+    <section id="splash-screen" class="page active">
+        <canvas id="confetti-canvas"></canvas>
+        <div class="splash-content">
+            <div class="dumbbell-container">
+                <div class="dumbbell">🏋️</div>
+            </div>
+            <p class="splash-text">TAP ANYWHERE TO START 💪</p>
+        </div>
+    </section>
+
+    <!-- User Selection Page -->
+    <section id="user-selection" class="page">
+        <div class="container">
+            <h1 class="page-title user-select-title">Who's Working Out Today?</h1>
+            <p class="user-select-subtitle">Select your profile to begin</p>
+
+            <div class="user-grid">
+                <button class="user-card" data-user="setareh">
+                    <div class="user-avatar">🌸</div>
+                    <div class="user-name">Setareh</div>
+                    <div class="user-tagline">Let's get strong! 💪</div>
+                </button>
+
+                <!-- Placeholder for future users -->
+                <button class="user-card user-add" disabled>
+                    <div class="user-avatar">➕</div>
+                    <div class="user-name">Add User</div>
+                    <div class="user-tagline">Coming Soon</div>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Menu -->
+    <section id="main-menu" class="page">
+        <div class="container">
+            <h1 class="app-title">Setareh's Workout</h1>
+            <div class="menu-grid">
+                <button class="menu-button" data-page="instructions">
+                    <span class="menu-emoji">💪</span>
+                    <span class="menu-text">Instructions</span>
+                </button>
+                <button class="menu-button" data-page="day1">
+                    <span class="menu-emoji">🌸</span>
+                    <span class="menu-text">Day 1<br>Lower Body & Core</span>
+                </button>
+                <button class="menu-button" data-page="day2">
+                    <span class="menu-emoji">✨</span>
+                    <span class="menu-text">Day 2<br>Upper Body & Core</span>
+                </button>
+                <button class="menu-button" data-page="day3">
+                    <span class="menu-emoji">🎀</span>
+                    <span class="menu-text">Day 3<br>Full Body</span>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Instructions Page -->
+    <section id="instructions" class="page workout-page">
+        <button class="back-button" aria-label="Back to menu">←</button>
+        <div class="container">
+            <h1 class="page-title">Hi Setareh! 💕</h1>
+            <p class="intro-text">Welcome to your personalized 3-day workout program!</p>
+
+            <div class="info-card">
+                <h2>Your Schedule 📅</h2>
+                <ul class="schedule-list">
+                    <li><strong>Monday:</strong> Day 1 (Lower Body & Core)</li>
+                    <li><strong>Wednesday:</strong> Day 2 (Upper Body & Core)</li>
+                    <li><strong>Friday:</strong> Day 3 (Full Body)</li>
+                </ul>
+            </div>
+
+            <div class="info-card">
+                <h2>Important Tips ✨</h2>
+                <div class="tip-card">
+                    <span class="tip-emoji">🌸</span>
+                    <p>Rest at least one day between workouts</p>
+                </div>
+                <div class="tip-card">
+                    <span class="tip-emoji">💪</span>
+                    <p>Focus on form before speed or weight</p>
+                </div>
+                <div class="tip-card">
+                    <span class="tip-emoji">❤️</span>
+                    <p>Listen to your body - soreness is normal, pain is not</p>
+                </div>
+                <div class="tip-card">
+                    <span class="tip-emoji">💧</span>
+                    <p>Stay hydrated throughout your workout</p>
+                </div>
+                <div class="tip-card">
+                    <span class="tip-emoji">🔥</span>
+                    <p>Never skip warm-ups or cool-downs</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Day 1: Lower Body & Core -->
+    <section id="day1" class="page workout-page">
+        <button class="back-button" aria-label="Back to menu">←</button>
+        <div class="container">
+            <h1 class="page-title">🌸 Day 1: Lower Body & Core</h1>
+            <div class="progress-indicator">
+                <span id="day1-progress">0 of 5 exercises complete</span>
+            </div>
+
+            <!-- Warmup -->
+            <div class="section-card">
+                <h2 class="section-title">Warm-up (5 minutes)</h2>
+                <div class="warmup-list">
+                    <div class="warmup-item">
+                        <strong>Marching in place</strong> (مارش در محل) - 2 minutes
+                    </div>
+                    <div class="warmup-item">
+                        <strong>Hip circles</strong> (دایره ران) - 10 each direction
+                    </div>
+                    <div class="warmup-item">
+                        <strong>Leg swings</strong> (نوسان پا) - 10 each leg
+                    </div>
+                </div>
+            </div>
+
+            <!-- Exercises -->
+            <div class="exercises-container" id="day1-exercises">
+                <!-- Populated by JavaScript -->
+            </div>
+
+            <!-- Cooldown -->
+            <div class="section-card cooldown">
+                <h2 class="section-title">Cool-down</h2>
+                <p><strong>Full body stretching</strong> - 5 minutes</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Day 2: Upper Body & Core -->
+    <section id="day2" class="page workout-page">
+        <button class="back-button" aria-label="Back to menu">←</button>
+        <div class="container">
+            <h1 class="page-title">✨ Day 2: Upper Body & Core</h1>
+            <div class="progress-indicator">
+                <span id="day2-progress">0 of 5 exercises complete</span>
+            </div>
+
+            <!-- Warmup -->
+            <div class="section-card">
+                <h2 class="section-title">Warm-up (5 minutes)</h2>
+                <div class="warmup-list">
+                    <div class="warmup-item">
+                        <strong>Arm circles</strong> (دایره بازو) - 10 each direction
+                    </div>
+                    <div class="warmup-item">
+                        <strong>Shoulder rolls</strong> (چرخش شانه) - 10 forward, 10 back
+                    </div>
+                    <div class="warmup-item">
+                        <strong>Cat-cow stretch</strong> (کشش گربه-گاو) - 10 reps
+                    </div>
+                </div>
+            </div>
+
+            <!-- Exercises -->
+            <div class="exercises-container" id="day2-exercises">
+                <!-- Populated by JavaScript -->
+            </div>
+
+            <!-- Cooldown -->
+            <div class="section-card cooldown">
+                <h2 class="section-title">Cool-down</h2>
+                <p><strong>Upper body stretching</strong> - 5 minutes</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Day 3: Full Body -->
+    <section id="day3" class="page workout-page">
+        <button class="back-button" aria-label="Back to menu">←</button>
+        <div class="container">
+            <h1 class="page-title">🎀 Day 3: Full Body</h1>
+            <div class="progress-indicator">
+                <span id="day3-progress">0 of 5 exercises complete</span>
+            </div>
+
+            <!-- Warmup -->
+            <div class="section-card">
+                <h2 class="section-title">Warm-up (5 minutes)</h2>
+                <div class="warmup-list">
+                    <div class="warmup-item">
+                        <strong>Jumping jacks</strong> (جامپینگ جک) - 30 seconds
+                    </div>
+                    <div class="warmup-item">
+                        <strong>Bodyweight squats</strong> (اسکوات) - 10 reps
+                    </div>
+                    <div class="warmup-item">
+                        <strong>Arm swings</strong> (نوسان بازو) - 10 each direction
+                    </div>
+                </div>
+            </div>
+
+            <!-- Exercises -->
+            <div class="exercises-container" id="day3-exercises">
+                <!-- Populated by JavaScript -->
+            </div>
+
+            <!-- Cooldown -->
+            <div class="section-card cooldown">
+                <h2 class="section-title">Cool-down</h2>
+                <p><strong>Full body cool down</strong> - 5 minutes</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Video Modal -->
+    <div id="video-modal" class="modal">
+        <div class="modal-overlay"></div>
+        <div class="modal-content">
+            <button class="modal-close" aria-label="Close video">&times;</button>
+            <div class="video-container">
+                <iframe id="video-iframe" src="" frameborder="0" allowfullscreen></iframe>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="workouts.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
